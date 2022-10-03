@@ -1,0 +1,40 @@
+version: "3.3"
+
+services:
+    sut:
+        container_name: test-bench
+        image: ${IMAGE_TAG}
+        user: ${CONTAINER_USER}
+        environment:
+            SKIP_DEPLOY: 'yes'
+            MEMORY_LIMIT: 254M
+        ports:
+            - ${TEST_ADDR}:80
+        volumes:
+            - ./test.sh:/test.sh:ro
+        networks:
+            test_deployer_container:
+                aliases:
+                - mariadb.local
+
+    mariadb106:
+        image: mariadb:10.6
+        restart: on-failure:2
+        healthcheck:
+            test: ["CMD", "mysqladmin", "ping", "-upublic", "-ppublic"]
+            interval: 120s
+            timeout: 1s
+            retries: 3
+        networks:
+            test_deployer_container:
+                aliases:
+                - mariadb.local
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: public
+            MYSQL_USER: public
+            MYSQL_PASSWORD: public
+
+networks:
+    test_deployer_container:
+        driver: bridge
