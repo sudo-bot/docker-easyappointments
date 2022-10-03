@@ -14,7 +14,7 @@ WORKDIR /var/www/easyappointments
 
 RUN apk add --no-cache --update nginx curl unzip \
     php8-fpm php8 php8-pdo_mysql php8-session \
-    php8-json php8-curl php8-mbstring php8-gd \
+    php8-json php8-curl php8-mbstring php8-gd && \
     # https://gitlab.alpinelinux.org/alpine/aports/-/issues/12308
     ln -s /usr/bin/php8 /usr/bin/php && \
     mkdir -p /var/log/php8 && \
