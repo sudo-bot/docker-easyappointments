@@ -6,13 +6,10 @@ ARG BUILD_DATE
 ARG VCS_REF
 
 COPY --from=botsudo/docker-openldap /usr/bin/horust /usr/bin/horust
-COPY docker-entrypoint.sh /
-COPY horust/ /etc/horust/
-COPY nginx-default.conf /etc/nginx/http.d/default.conf
-COPY nginx.conf /etc/nginx/nginx.conf
-COPY php-fpm-www-pool.conf /etc/php8/php-fpm.d/www.conf
 
-WORKDIR /var/www/easyappointments
+# Set user and group
+ARG user=deploy
+ARG group=deploy
 
 RUN apk add --no-cache --update nginx curl unzip \
     # https://github.com/mischov/meeseeks/issues/98#issuecomment-636615680
@@ -24,14 +21,26 @@ RUN apk add --no-cache --update nginx curl unzip \
     ln -sf /dev/stdout /var/log/nginx/access.log && \
     ln -sf /dev/stderr /var/log/nginx/error.log && \
     ln -sf /dev/stderr /var/log/php8/error.log && \
-    horust --version && \
+    addgroup -S ${group} && \
+    adduser -G ${group} -s /bin/sh -h /var/www/easyappointments -S ${user}
+
+WORKDIR /var/www/easyappointments
+
+COPY docker-entrypoint.sh /
+COPY horust/ /etc/horust/
+COPY nginx-default.conf /etc/nginx/http.d/default.conf
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY php-fpm-www-pool.conf /etc/php8/php-fpm.d/www.conf
+
+# Switch to user
+USER ${uid}:${gid}
+
+RUN horust --version && \
     nginx -v && php-fpm8 -v && php -v && date -R > /build_date && \
     printf '{"build_date": "%s", "timestamp": %i}' "$(date -R)" "$(date +%s)" > /build_date.json && \
     curl -# -L -o easyappointments.zip ${DIST_URL} && \
     unzip easyappointments.zip && \
-    rm easyappointments.zip && \
-    ls -lah && \
-    apk del --no-network --no-cache unzip
+    rm easyappointments.zip
 
 # Metadata
 LABEL org.label-schema.vendor="Sudo-Bot" \
