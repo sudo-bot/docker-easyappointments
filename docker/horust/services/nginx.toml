@@ -4,6 +4,7 @@ stdout = "STDOUT"
 stderr = "STDERR"
 user = "deploy"
 working-directory = "/"
+start-after = ["fpm.toml"]
 
 [restart]
 strategy = "on-failure"
