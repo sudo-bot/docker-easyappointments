@@ -2,8 +2,6 @@
 
 set -eu
 
-apk add --no-cache curl
-
 DID_FAIL=0
 
 checkUrl() {

@@ -29,7 +29,7 @@ RUN apk add --no-cache --update nginx curl unzip \
     unzip easyappointments.zip && \
     rm easyappointments.zip && \
     ls -lah && \
-    apk del --no-network --no-cache unzip curl
+    apk del --no-network --no-cache unzip
 
 # Metadata
 LABEL org.label-schema.vendor="Sudo-Bot" \

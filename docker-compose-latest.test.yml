@@ -10,22 +10,34 @@ services:
             - ./test.sh:/test.sh:ro
         entrypoint: ["/test.sh"]
         depends_on:
-            - easyappointments
-            - mariadb
+            easyappointments:
+                condition: service_healthy
+            mariadb:
+                condition: service_healthy
         networks:
             test_deployer_container:
 
     easyappointments:
         container_name: easyappointments
         image: ${IMAGE_TAG}
+        healthcheck:
+            test:
+                [
+                    "CMD",
+                    "curl",
+                    "--fail",
+                    "http://easyappointments/.nginx/status",
+                ]
+            interval: 300s
+            timeout: 1s
         networks:
             test_deployer_container:
                 aliases:
                 - mariadb.local
 
 
-    mariadb106:
-        image: mariadb:10.6
+    mariadb:
+        image: mariadb:10.9
         restart: on-failure:2
         healthcheck:
             test: ["CMD", "mysqladmin", "ping", "-upublic", "-ppublic"]
