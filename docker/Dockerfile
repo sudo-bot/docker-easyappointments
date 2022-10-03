@@ -17,12 +17,18 @@ RUN apk add --no-cache --update nginx curl unzip \
     openssl libgcc \
     php8-fpm php8 php8-pdo_mysql php8-session \
     php8-json php8-curl php8-mbstring php8-gd && \
+    horust --version && nginx -v && php-fpm8 -v && php -v && \
     mkdir -p /var/log/php8 && \
     ln -sf /dev/stdout /var/log/nginx/access.log && \
     ln -sf /dev/stderr /var/log/nginx/error.log && \
     ln -sf /dev/stderr /var/log/php8/error.log && \
+    date -R > /build_date && \
+    printf '{"build_date": "%s", "timestamp": %i}' "$(date -R)" "$(date +%s)" > /build_date.json && \
     addgroup -S ${group} && \
-    adduser -G ${group} -s /bin/sh -h /var/www/easyappointments -S ${user}
+    adduser -G ${group} -G nginx -s /bin/sh -h /var/www/easyappointments -S ${user} && \
+    id deploy && \
+    chown -R deploy:deploy /var/log/php8 /var/lib/nginx /run/nginx && \
+    chmod -R 770 /var/log/php8 /var/lib/nginx /run/nginx
 
 WORKDIR /var/www/easyappointments
 
@@ -33,13 +39,10 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY php-fpm-www-pool.conf /etc/php8/php-fpm.d/www.conf
 
 # Switch to user
-USER ${uid}:${gid}
+USER deploy:deploy
 
-RUN horust --version && \
-    nginx -v && php-fpm8 -v && php -v && date -R > /build_date && \
-    printf '{"build_date": "%s", "timestamp": %i}' "$(date -R)" "$(date +%s)" > /build_date.json && \
-    curl -# -L -o easyappointments.zip ${DIST_URL} && \
-    unzip easyappointments.zip && \
+RUN curl -# -L -o easyappointments.zip ${DIST_URL} && \
+    unzip -q easyappointments.zip && \
     rm easyappointments.zip
 
 # Metadata

@@ -4,7 +4,6 @@ stdout = "STDOUT"
 stderr = "STDERR"
 user = "deploy"
 working-directory = "/"
-start-after = ["fpm.toml"]
 
 [restart]
 strategy = "on-failure"
@@ -12,7 +11,7 @@ backoff = "1s"
 attempts = 10
 
 [healthiness]
-file-path = "/run/nginx.pid"
+file-path = "/run/nginx/nginx.pid"
 max-failed = 10
 
 [failure]
