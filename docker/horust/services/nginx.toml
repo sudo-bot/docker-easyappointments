@@ -2,7 +2,7 @@ command = "nginx"
 start-delay = "2s"
 stdout = "STDOUT"
 stderr = "STDERR"
-user = "root"
+user = "deploy"
 working-directory = "/"
 start-after = ["fpm.toml"]
 
