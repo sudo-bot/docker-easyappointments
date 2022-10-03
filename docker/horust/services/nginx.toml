@@ -12,7 +12,7 @@ backoff = "1s"
 attempts = 10
 
 [healthiness]
-file-path = "/tmp/nginx.pid"
+file-path = "/run/nginx.pid"
 max-failed = 10
 
 [failure]

@@ -11,7 +11,7 @@ backoff = "1s"
 attempts = 10
 
 [healthiness]
-file-path = "/tmp/php-fpm.sock"
+file-path = "/run/php-fpm.sock"
 max-failed = 10
 
 [failure]
