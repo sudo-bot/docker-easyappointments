@@ -13,6 +13,9 @@ COPY php-fpm-www-pool.conf /etc/php8/php-fpm.d/www.conf
 WORKDIR /var/www/easyappointments
 
 RUN apk add --no-cache --update nginx curl unzip \
+    # https://github.com/mischov/meeseeks/issues/98#issuecomment-636615680
+    # For Horust
+    openssl libgcc \
     php8-fpm php8 php8-pdo_mysql php8-session \
     php8-json php8-curl php8-mbstring php8-gd && \
     mkdir -p /var/log/php8 && \
