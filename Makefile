@@ -1,6 +1,5 @@
 IMAGE_TAG ?= docker-easyappointments
-TEST_ADDR ?= 127.0.0.77:9099
-CONTAINER_USER ?= "0:$(shell id -g)"
+TEST_ADDR ?= http://easyappointments
 
 .PHONY: docker-build docker-test run-test cleanup-test test
 
@@ -13,24 +12,17 @@ docker-build:
 		--tag $(IMAGE_TAG) \
 		--pull
 
-docker-test:
-	TEST_ADDR="${TEST_ADDR}" ./test.sh
+docker-test: test
 
-test: run-test test cleanup-test
+test: run-test cleanup-test
 
 run-test:
 	TEST_ADDR="${TEST_ADDR}" \
-	CONTAINER_USER="${CONTAINER_USER}" \
 	IMAGE_TAG="${IMAGE_TAG}" \
-	docker-compose -f docker-compose-latest.test.yml up -d
-	# --exit-code-from=sut --abort-on-container-exit
-	@echo "You can browse: http://${TEST_ADDR}"
-	@sleep 2
-	docker exec test-bench sh -eu /test.sh
+	docker-compose -f docker-compose-latest.test.yml up --exit-code-from=sut --abort-on-container-exit
 
 cleanup-test:
 	@echo "Stopping and removing the container"
 	TEST_ADDR="${TEST_ADDR}" \
-	CONTAINER_USER="${CONTAINER_USER}" \
 	IMAGE_TAG="${IMAGE_TAG}" \
 	docker-compose -f docker-compose-latest.test.yml down
