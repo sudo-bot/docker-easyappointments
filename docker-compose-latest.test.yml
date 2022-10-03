@@ -20,6 +20,12 @@ services:
     easyappointments:
         container_name: easyappointments
         image: ${IMAGE_TAG}
+        environment:
+            BASE_URL: http://easyappointments
+            DB_HOST: mariadb
+            DB_NAME: public
+            DB_USERNAME: public
+            DB_PASSWORD: public
         depends_on:
             mariadb:
                 condition: service_healthy

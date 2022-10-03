@@ -38,6 +38,7 @@ COPY horust/ /etc/horust/
 COPY nginx-default.conf /etc/nginx/http.d/default.conf
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY php-fpm-www-pool.conf /etc/php8/php-fpm.d/www.conf
+COPY config.php ./
 
 # Switch to user
 USER deploy:deploy
