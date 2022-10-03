@@ -8,3 +8,4 @@ set -eu
 
 echo 'Starting...'
 horust --unsuccessful-exit-finished-failed
+echo 'Stopped.'

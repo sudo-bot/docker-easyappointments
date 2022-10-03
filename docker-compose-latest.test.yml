@@ -20,6 +20,9 @@ services:
     easyappointments:
         container_name: easyappointments
         image: ${IMAGE_TAG}
+        depends_on:
+            mariadb:
+                condition: service_healthy
         healthcheck:
             test:
                 [
