@@ -26,9 +26,10 @@ services:
                     "CMD",
                     "curl",
                     "--fail",
-                    "http://easyappointments/.nginx/status",
+                    "http://127.0.0.1/.nginx/status",
                 ]
-            interval: 300s
+            start_period: 5s
+            interval: 15s
             timeout: 1s
         networks:
             test_deployer_container:
@@ -41,7 +42,8 @@ services:
         restart: on-failure:2
         healthcheck:
             test: ["CMD", "mysqladmin", "ping", "-upublic", "-ppublic"]
-            interval: 120s
+            start_period: 10s
+            interval: 15s
             timeout: 1s
             retries: 3
         networks:

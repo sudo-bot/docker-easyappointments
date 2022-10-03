@@ -1,5 +1,4 @@
-# -d to enable debug
-command = "php-fpm8"
+command = "php-fpm8 --daemonize"
 start-delay = "2s"
 stdout = "STDOUT"
 stderr = "STDERR"
