@@ -19,6 +19,7 @@ RUN apk add --no-cache --update nginx curl unzip \
     php8-json php8-curl php8-mbstring php8-gd && \
     horust --version && nginx -v && php-fpm8 -v && php -v && \
     mkdir -p /var/log/php8 && \
+    mkdir /run/phpfpm && \
     ln -sf /dev/stdout /var/log/nginx/access.log && \
     ln -sf /dev/stderr /var/log/nginx/error.log && \
     ln -sf /dev/stderr /var/log/php8/error.log && \
@@ -27,8 +28,8 @@ RUN apk add --no-cache --update nginx curl unzip \
     addgroup -S ${group} && \
     adduser -G ${group} -G nginx -s /bin/sh -h /var/www/easyappointments -S ${user} && \
     id deploy && \
-    chown -R deploy:deploy /var/log/php8 /var/lib/nginx /run/nginx && \
-    chmod -R 770 /var/log/php8 /var/lib/nginx /run/nginx
+    chown -R deploy:deploy /var/log/php8 /var/lib/nginx /run/nginx /run/phpfpm && \
+    chmod -R 770 /var/log/php8 /var/lib/nginx /run/nginx /run/phpfpm
 
 WORKDIR /var/www/easyappointments
 
