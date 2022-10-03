@@ -2,6 +2,8 @@ FROM alpine:3.16
 
 ARG VERSION="1.4.3"
 ARG DIST_URL="https://github.com/alextselegidis/easyappointments/releases/download/${VERSION}/easyappointments-${VERSION}.zip"
+ARG BUILD_DATE
+ARG VCS_REF
 
 COPY --from=botsudo/docker-openldap /usr/bin/horust /usr/bin/horust
 COPY docker-entrypoint.sh /
