@@ -24,7 +24,6 @@ RUN apk add --no-cache --update nginx curl unzip \
     ln -sf /dev/stderr /var/log/php8/error.log && \
     horust --version && \
     nginx -v && php-fpm8 -v && php -v && date -R > /build_date && \
-    rm -r /tmp/* && \
     printf '{"build_date": "%s", "timestamp": %i}' "$(date -R)" "$(date +%s)" > /build_date.json && \
     curl -# -L -o easyappointments.zip ${DIST_URL} && \
     unzip easyappointments.zip && \
