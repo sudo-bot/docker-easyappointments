@@ -1,5 +1,5 @@
 IMAGE_TAG ?= docker-easyappointments
-TEST_ADDR ?= http://easyappointments
+TEST_ADDR ?= easyappointments
 
 .PHONY: docker-build docker-test run-test cleanup-test test
 
