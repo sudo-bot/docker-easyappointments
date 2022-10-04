@@ -21,6 +21,8 @@ services:
         DB_USERNAME: easyappointments
         DB_PASSWORD: easyappointments
         # DEBUG_MODE: true
+        # French is the default lang
+        DEFAULT_LANG: french
     healthcheck:
         test:
         [

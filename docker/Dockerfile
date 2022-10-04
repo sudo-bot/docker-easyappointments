@@ -47,7 +47,8 @@ RUN curl -# -L -o easyappointments.zip ${DIST_URL} && \
     unzip -q easyappointments.zip && \
     rm easyappointments.zip && \
     echo -e '\n$config["uri_protocol"] = "REQUEST_URI";' >> application/config/config.php && \
-    echo -e '\n$config["index_page"] = "";' >> application/config/config.php
+    echo -e '\n$config["index_page"] = "";' >> application/config/config.php && \
+    echo -e '\n$config["language"] = is_string(getenv("DEFAULT_LANG")) ? getenv("DEFAULT_LANG") : $config["language"];' >> application/config/config.php
 
 # Metadata
 LABEL org.label-schema.vendor="Sudo-Bot" \
