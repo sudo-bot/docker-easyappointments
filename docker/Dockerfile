@@ -15,8 +15,8 @@ RUN apk add --no-cache --update nginx curl unzip \
     # https://github.com/mischov/meeseeks/issues/98#issuecomment-636615680
     # For Horust
     openssl libgcc \
-    php8-fpm php8 php8-pdo_mysql php8-session \
-    php8-json php8-curl php8-mbstring php8-gd && \
+    php8-fpm php8 php8-mysqli php8-session \
+    php8-json php8-curl php8-mbstring php8-gd php8-ctype && \
     horust --version && nginx -v && php-fpm8 -v && php -v && \
     mkdir -p /var/log/php8 && \
     mkdir /run/phpfpm && \
