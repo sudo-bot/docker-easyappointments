@@ -29,6 +29,7 @@ $dbHost = getenv('DB_HOST');
 $dbName = getenv('DB_NAME');
 $dbUsername = getenv('DB_USERNAME');
 $dbPassword = getenv('DB_PASSWORD');
+$debugMode = getenv('DEBUG_MODE') === 'true' ? 'true' : 'false';
 
 $dataConfig = <<<PHP
 class Config {
@@ -39,7 +40,7 @@ class Config {
 
     const BASE_URL      = '$baseUrl';
     const LANGUAGE      = 'french';
-    const DEBUG_MODE    = false;
+    const DEBUG_MODE    = $debugMode;
 
     // ------------------------------------------------------------------------
     // DATABASE SETTINGS
