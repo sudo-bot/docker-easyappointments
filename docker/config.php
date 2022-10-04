@@ -30,7 +30,7 @@ $dbName = getenv('DB_NAME');
 $dbUsername = getenv('DB_USERNAME');
 $dbPassword = getenv('DB_PASSWORD');
 
-eval(<<<PHP
+$dataConfig = <<<PHP
 class Config {
 
     // ------------------------------------------------------------------------
@@ -39,7 +39,7 @@ class Config {
 
     const BASE_URL      = '$baseUrl';
     const LANGUAGE      = 'french';
-    const DEBUG_MODE    = FALSE;
+    const DEBUG_MODE    = false;
 
     // ------------------------------------------------------------------------
     // DATABASE SETTINGS
@@ -63,5 +63,7 @@ class Config {
 
 /* End of file config.php */
 /* Location: ./config.php */
-PHP
-);
+PHP;
+
+eval($dataConfig);
+unset($dataConfig, $baseUrl, $dbHost, $dbName, $dbUsername, $dbPassword);

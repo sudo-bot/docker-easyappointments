@@ -24,3 +24,4 @@ wait = "10s"
 
 [environment]
 keep-env = false
+re-export = ["BASE_URL", "DB_HOST", "DB_NAME", "DB_USERNAME", "DB_PASSWORD"]
